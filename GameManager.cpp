@@ -1,13 +1,12 @@
 #include "GameManager.h"
 #include <iostream>
-
 using namespace std;
 
-GameManager::GameManager() {
-	monsterCount = 1; 
+GameManager::GameManager(const string& playerName) {
+	monsterCount = 1;
 	turn = 1;
-	player = new Player(PlayerName, 100);  
-	monster = new Monster(monsterCount);
+	player = new Player(playerName, 100);
+	monster = new Monster("Monster1", 50, 10, 25, 3);
 }
 
 GameManager::~GameManager() {
@@ -15,10 +14,10 @@ GameManager::~GameManager() {
 	delete monster;
 }
 
-void GameManager::StartGame() {
-	cout << "게임 시작\n";
+void GameManager::startGame() {
+	cout << "게임 시작!" << endl;
 	while (true) {
-		cout << "\n===== [Turn " << turn << "] =====\n";
+		cout << endl << "===== [ Turn " << turn << " ] =====" << endl;
 		PrintStatus();
 
 		PlayerTurn();
@@ -33,61 +32,70 @@ void GameManager::StartGame() {
 
 void GameManager::PlayerTurn() {
 	int skill;
+	bool skillUsedSuccessfully = false;
+
 	while (true) {
-		cout << "플레이어의 턴입니다. 스킬을 선택하세요:\n";
-		cout << "1. 기본 공격\n";
-		cout << "2. 스킬 (치명타 공격)\n";
-		cout << "3. 궁극기\n";
-		cout << "4. 힐\n";
-		cout << ">> ";
+		cout << "플레이어의 턴입니다. 스킬을 선택하세요." << endl;
+		cout << "1. 일반 공격" << endl;
+		cout << "2. 스킬 (치명타 공격)" << endl;
+		cout << "3. 궁극기" << endl;
+		cout << "4. 힐" << endl;
+		cout << ">>";
 		cin >> skill;
 
 		if (skill < 1 || skill > 4) {
-			cout << "잘못된 선택입니다. 다시 시도하세요.\n";
+			cout << "잘못된 선택입니다. 다시 시도하세요." << endl;
 			cin.clear();
 			cin.ignore(1000, '\n');
 			continue;
 		}
-
 		switch (skill) {
 		case 1:
 			player->basicAttack(*monster);
+			skillUsedSuccessfully = true;
 			break;
 		case 2:
 			player->skill2(*monster);
+			skillUsedSuccessfully = true;
 			break;
 		case 3:
-			player->ultimateSkill(*monster);
+			skillUsedSuccessfully = player->ultimateSkill(*monster);
 			break;
 		case 4:
-			player->heal();
+			skillUsedSuccessfully = player->heal();
 			break;
 		}
-		cin.ignore();
-		player->reduceCooldowns(); 
-		break;
+
+		if (skillUsedSuccessfully) {
+			player->reduceCooldowns();
+			break;
+		}
 	}
 }
-
-void GameManager::MonsterTurn() {
-	cout << "몬스터의 턴입니다.\n";
-	monster->UseSkill(1, *player); //몬스터 UseSkill() 메소드 추가하기
-}
-
-void GameManager::PrintStatus() {
-	cout << "[상태]\n" << player->getStatus() << monster->getStatus() << endl;
-}
-
-bool GameManager::IsGameover() {
-	if (!player->Character::isAlive()) {
-		cout << "플레이어가 패배했습니다. Game Over.\n";
-		return true;
+	void GameManager::MonsterTurn() {
+		cout << "몬스터의 턴입니다." << endl;
+		int damage = monster->performAction();
+		player->takeDamage(damage);
+		monster->decreaseCooldown();
 	}
-	if (!monster->Character::isAlive()) {
-		cout << "몬스터를 처치했습니다.\n";
-		delete monster;
-		monster = new Monster(++monsterCount);
-		cout << monster->Character::getName() << "이/가 등장했습니다.\n"; //getName() 얻어지는거 확인해야함
+
+	void GameManager::PrintStatus() {
+		cout << "[현재 상태]" << endl;
+		player->printStatus();
+		monster->printStatus();
 	}
-	return false;
-}
+
+	bool GameManager::IsGameover() {
+		if (player->isAlive() <= 0) {
+			cout << "플레이어가 패배했습니다." << endl;
+			return true;
+		}
+		if (monster->isAlive() <= 0) {
+			cout << "몬스터를 처치했습니다!." << endl;
+			delete monster;
+			monsterCount ++;
+			monster = new Monster("Monster" + to_string(monsterCount), 50 + monsterCount * 10, 10 + monsterCount * 2, 25 + monsterCount * 2, 3);
+			cout << monster->getName() << "을/를 조우했습니다." << endl;
+		}
+		return false;
+	}

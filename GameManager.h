@@ -1,10 +1,9 @@
-#include <iostream>
-#include <string>
-#include "character.h"
-#include "Player.h"
-#include "Monster.h"
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
+
+#include "Player.h"
+#include "Monster.h"
+#include <string>
 
 using namespace std;
 
@@ -16,14 +15,14 @@ private:
 	int turn;
 
 public:
-	GameManager(const string& PlyerName);
+	GameManager(const string& playername);
 	~GameManager();
 
-	void StartGame();
+	void startGame();
 	void PlayerTurn();
 	void MonsterTurn();
 	void PrintStatus();
 	bool IsGameover();
 };
 
-#endif GAMEMANAGER_H
+#endif 
