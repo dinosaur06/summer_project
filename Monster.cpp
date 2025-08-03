@@ -1,5 +1,6 @@
 #include "Monster.h"
 #include <iostream>
+#include <windows.h>
 using namespace std;
 
 Monster::Monster(const string& name, int hp, int baseDamage, int ultDamage, int ultCooldown)
@@ -11,12 +12,14 @@ Monster::Monster(const string& name, int hp, int baseDamage, int ultDamage, int 
 
 int Monster::performAction() {
 	if (ultimateCooldownCurrent == 0) {
-		cout << name << "이/가 궁극기를 사용합니다! (" << ultimateAttackDamage << "피해)" << endl;
+		cout << name << "이/가 궁극기를 사용합니다!" << endl;
+		Sleep(200);
 		ultimateCooldownCurrent = ultimateCooldownMax;
 		return ultimateAttackDamage;
 	} 
 	else {
-		cout << name << "이/가 일반 공격을 합니다! (" << baseAttackDamage << "피해)" << endl;
+		cout << name << "이/가 일반 공격을 합니다!" << endl;
+		Sleep(200);
 		return baseAttackDamage;
 	}
 }
@@ -32,12 +35,12 @@ int Monster::getUltimateCoddownCurrent() const {
 }
 
 void Monster::printStatus() const {
-	cout << getName() << " HP: " << hp << "/" << maxHp << endl;
+	cout << getName() << " HP: " << hp << "/" << maxHp << " ";
 
 	if (ultimateCooldownCurrent == 0) {
-		cout << "[궁극기 사용 가능!]" << endl;
+		cout << "[몬스터 궁극기 사용 가능! 다음 턴에 몬스터가 궁극기를 사용합니다.]" << endl << endl;
 	}
 	else {
-		cout << "[궁극기 쿨타임: " << ultimateCooldownCurrent << "턴]" << endl;
+		cout << "[몬스터 궁극기 쿨타임: " << ultimateCooldownCurrent << "턴]" << endl << endl;
 	}
 }

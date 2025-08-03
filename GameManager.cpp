@@ -1,5 +1,7 @@
 #include "GameManager.h"
+#include <windows.h>
 #include <iostream>
+
 using namespace std;
 
 GameManager::GameManager(const string& playerName) {
@@ -15,9 +17,10 @@ GameManager::~GameManager() {
 }
 
 void GameManager::startGame() {
-	cout << "게임 시작!" << endl;
+	cout << endl << "게임 시작!" << endl << endl;
+	Sleep(300);
 	while (true) {
-		cout << endl << "===== [ Turn " << turn << " ] =====" << endl;
+		cout << "===== [ Turn " << turn << " ] =====" << endl << endl;
 		PrintStatus();
 
 		PlayerTurn();
@@ -35,16 +38,16 @@ void GameManager::PlayerTurn() {
 	bool skillUsedSuccessfully = false;
 
 	while (true) {
-		cout << "플레이어의 턴입니다. 스킬을 선택하세요." << endl;
+		cout << "플레이어의 턴입니다. 스킬을 선택하세요." << endl << endl;
 		cout << "1. 일반 공격" << endl;
 		cout << "2. 스킬 (치명타 공격)" << endl;
 		cout << "3. 궁극기" << endl;
 		cout << "4. 힐" << endl;
-		cout << ">>";
+		cout << endl << ">>";
 		cin >> skill;
 
 		if (skill < 1 || skill > 4) {
-			cout << "잘못된 선택입니다. 다시 시도하세요." << endl;
+			cout << "잘못된 선택입니다. 다시 시도하세요." << endl << endl;
 			cin.clear();
 			cin.ignore(1000, '\n');
 			continue;
@@ -73,7 +76,10 @@ void GameManager::PlayerTurn() {
 	}
 }
 	void GameManager::MonsterTurn() {
-		cout << "몬스터의 턴입니다." << endl;
+		
+		Sleep(300);
+		cout << "몬스터의 턴입니다." << endl << endl;
+		Sleep(300);
 		int damage = monster->performAction();
 		player->takeDamage(damage);
 		monster->decreaseCooldown();
@@ -95,7 +101,13 @@ void GameManager::PlayerTurn() {
 			delete monster;
 			monsterCount ++;
 			monster = new Monster("Monster" + to_string(monsterCount), 50 + monsterCount * 10, 10 + monsterCount * 2, 25 + monsterCount * 2, 3);
-			cout << monster->getName() << "을/를 조우했습니다." << endl;
+			cout << "." << endl;
+			Sleep(200);
+			cout << "." << endl;
+			Sleep(200);
+			cout << "." << endl;
+			Sleep(200);
+			cout << "당신은 " << monster->getName() << "을/를 조우했습니다." << endl << endl;
 		}
 		return false;
 	}

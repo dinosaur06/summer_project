@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include "GameManager.h"
+#include <Windows.h>
 using namespace std;
 
 
@@ -12,8 +13,13 @@ int main()
 
 	GameManager game(name);
 	game.startGame();
-	
-	cout << "게임이 종료되었습니다." << endl;
+	cout << "." << endl;
+	Sleep(200);
+	cout << "." << endl;
+	Sleep(200);
+	cout << "." << endl;
+	Sleep(200);
+	cout << "게임이 종료됩니다." << endl;
 
 	return 0;
 }

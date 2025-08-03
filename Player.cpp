@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <windows.h>
 #include "Player.h"
 using namespace std;
 
@@ -12,11 +13,13 @@ Player::Player(const string& name, int hp)
 void Player::basicAttack(Character& target) {
     int damage = 10;
     cout << name << "이/가 기본 공격을 사용했습니다!\n";
+    Sleep(200);
     target.takeDamage(damage);
 }
 
 void Player::skill2(Character& target) {
     cout << name << "이/가 치명타 스킬을 사용했습니다!\n";
+    Sleep(200);
     int critChance = rand() % 100;
     int damage = (critChance < 30) ? 30 : 15;
 
@@ -31,6 +34,7 @@ void Player::skill2(Character& target) {
 bool Player::ultimateSkill(Character& target) {
     if (canUseUltimate()) {
         cout << name << "이/가 궁극기를 사용했습니다!\n";
+        Sleep(200);
         target.takeDamage(50);
         ultimateCooldown = 5;
         return true;
@@ -48,7 +52,6 @@ bool Player::heal() {
             cout << name << "의 체력이 이미 가득 찼습니다!\n";
             return false;
         }
-        cout << name << "이/가 " << healAmount << "만큼 체력을 회복했습니다!\n";
         Character::heal(healAmount);
         healCooldown = 3;
         return true;
