@@ -1,28 +1,27 @@
-#ifndef CHARACTER_H
+﻿#ifndef CHARACTER_H
 #define CHARACTER_H
-
 #include <string>
 using namespace std;
 
 class Character {
 protected:
-    string name;
-    int hp;
-    int maxHp;
+	string name;
+	int hp;
+	int maxHp;
 
 public:
-    Character(const string& name, int hp);
-    virtual ~Character() = default;
+	Character(const string& name, int hp);
+	virtual ~Character() = default;
 
-    virtual void takeDamage(int damage);
-    virtual void heal(int amount); // Character의 heal은 amount 인자를 받음
+	virtual void takeDamage(int damage);
+	virtual void heal(int amount);
 
-    bool isAlive() const;
-    string getName() const;
-    int getHP() const;
-    int getMaxHP() const;
+	bool isAlive() const;
+	string getName() const;
+	int getHp() const;
+	int getMaxHp() const;
 
-    virtual void printStatus() const = 0; // 순수 가상 함수
+	virtual void printStatus() const = 0;
 };
 
 #endif

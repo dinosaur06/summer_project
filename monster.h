@@ -1,28 +1,26 @@
 ﻿#ifndef MONSTER_H
 #define MONSTER_H
 
-#include "Character.h"
 #include <string>
+#include "Character.h"
 using namespace std;
 
 class Monster : public Character {
 public:
-    Monster(const string& name, int hp, int baseDamage, int ultDamage, int ultCooldown);
+	Monster(const string& name, int hp, int baseDamage, int ultDamage, int ultCooldown);
 
-    int performAction();      // 공격 결정 및 데미지 반환
-    void decreaseCooldown(); // 쿨타임 감소
+	int performAction();
+	void decreaseCooldown();
 
+	void printStatus() const;
 
-    void printStatus() const override;
-
-    // 추가: 몬스터 궁극기 현재 쿨타임을 가져오는 함수
-    int getUltimateCooldownCurrent() const;
+	int getUltimateCoddownCurrent() const;
 
 protected:
-    int baseAttackDamage;
-    int ultimateAttackDamage;
-    int ultimateCooldownMax;
-    int ultimateCooldownCurrent;
+	int baseAttackDamage;
+	int ultimateAttackDamage;
+	int ultimateCooldownCurrent;
+	int ultimateCooldownMax;
 };
 
 #endif
