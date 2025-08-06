@@ -6,18 +6,18 @@
 
 using namespace std;
 
-// ì½˜ì†” í…ìŠ¤íŠ¸ ìƒ‰ìƒ ë³€ê²½ í•¨ìˆ˜
+// ÄÜ¼Ö ÅØ½ºÆ® »ö»ó º¯°æ ÇÔ¼ö
 void SetConsoleColor(int color) {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, color);
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, color);
 }
 
-// ìƒ‰ìƒ ìƒìˆ˜ ì •ì˜
+// »ö»ó »ó¼ö Á¤ÀÇ
 const int INTENSE_BLUE = FOREGROUND_BLUE | FOREGROUND_INTENSITY;
 const int INTENSE_GREEN = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
 const int INTENSE_RED = FOREGROUND_RED | FOREGROUND_INTENSITY;
-const int INTENSE_YELLOW = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY; // ë°ì€ ë…¸ë‘
-const int INTENSE_WHITE = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY; // ë°ì€ í•˜ì–‘ (ê¸°ë³¸)
+const int INTENSE_YELLOW = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY; // ¹àÀº ³ë¶û
+const int INTENSE_WHITE = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY; // ¹àÀº ÇÏ¾ç (±âº»)
 
 
 
@@ -36,7 +36,7 @@ GameManager::~GameManager() {
 }
 
 void GameManager::startGame() {
-	cout << endl << "ê²Œì„ ì‹œì‘!" << endl << endl;
+	cout << endl << "°ÔÀÓ ½ÃÀÛ!" << endl << endl;
 	Sleep(300);
 	while (true) {
 		cout << "===== [ Turn " << turn << " ] =====" << endl << endl;
@@ -46,7 +46,7 @@ void GameManager::startGame() {
 
 		PlayerTurn();
 		if (IsGameover()) break;
-		
+
 		if (monsterJustRespawned) {
 			monsterJustRespawned = false;
 		}
@@ -66,16 +66,16 @@ void GameManager::PlayerTurn() {
 	bool skillUsedSuccessfully = false;
 
 	while (true) {
-		cout << "í”Œë ˆì´ì–´ì˜ í„´ì…ë‹ˆë‹¤. ìŠ¤í‚¬ì„ ì„ íƒí•˜ì„¸ìš”." << endl << endl;
-		cout << "1. ì¼ë°˜ ê³µê²©" << endl;
-		cout << "2. ìŠ¤í‚¬ (ì¹˜ëª…íƒ€ ê³µê²©)" << endl;
-		cout << "3. ê¶ê·¹ê¸° (" << player->getUltimateCooldown() << "í„´ ë‚¨ìŒ)" << endl;
-		cout << "4. í (" << player->getHealCooldown() << "í„´ ë‚¨ìŒ)" << endl;
+		cout << "ÇÃ·¹ÀÌ¾îÀÇ ÅÏÀÔ´Ï´Ù. ½ºÅ³À» ¼±ÅÃÇÏ¼¼¿ä." << endl << endl;
+		cout << "1. ÀÏ¹İ °ø°İ" << endl;
+		cout << "2. ½ºÅ³ (Ä¡¸íÅ¸ °ø°İ)" << endl;
+		cout << "3. ±Ã±Ø±â (" << player->getUltimateCooldown() << "ÅÏ ³²À½)" << endl;
+		cout << "4. Èú (" << player->getHealCooldown() << "ÅÏ ³²À½)" << endl;
 		cout << endl << ">>";
 		cin >> skill;
 
 		if (cin.fail() || skill < 1 || skill > 4) {
-			cout << "ì˜ëª»ëœ ì„ íƒì…ë‹ˆë‹¤. ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”." << endl << endl;
+			cout << "Àß¸øµÈ ¼±ÅÃÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇÏ¼¼¿ä." << endl << endl;
 			cin.clear();
 			cin.ignore(1000, '\n');
 			continue;
@@ -104,9 +104,9 @@ void GameManager::PlayerTurn() {
 	}
 }
 void GameManager::MonsterTurn() {
-		
+
 	Sleep(300);
-	cout << "ëª¬ìŠ¤í„°ì˜ í„´ì…ë‹ˆë‹¤." << endl << endl;
+	cout << "¸ó½ºÅÍÀÇ ÅÏÀÔ´Ï´Ù." << endl << endl;
 	Sleep(300);
 	int damage = monster->performAction();
 	player->takeDamage(damage);
@@ -114,22 +114,22 @@ void GameManager::MonsterTurn() {
 }
 
 void GameManager::PrintStatus() {
-	cout << "[í˜„ì¬ ìƒíƒœ]" << endl;
+	cout << "[ÇöÀç »óÅÂ]" << endl;
 	player->printStatus();
 	monster->printStatus();
 }
 
 bool GameManager::IsGameover() {
 	if (player->isAlive() == false) {
-		SetConsoleColor(INTENSE_RED); // ê²Œì„ ì¢…ë£Œ ë¹¨ê°„ìƒ‰
-		cout << "í”Œë ˆì´ì–´ê°€ íŒ¨ë°°í–ˆìŠµë‹ˆë‹¤." << endl;
-		SetConsoleColor(INTENSE_WHITE); // ê¸°ë³¸ìƒ‰ìœ¼ë¡œ ëŒì•„ì˜´
+		SetConsoleColor(INTENSE_RED); // °ÔÀÓ Á¾·á »¡°£»ö
+		cout << "ÇÃ·¹ÀÌ¾î°¡ ÆĞ¹èÇß½À´Ï´Ù." << endl;
+		SetConsoleColor(INTENSE_WHITE); // ±âº»»öÀ¸·Î µ¹¾Æ¿È
 		return true;
 	}
 	if (monster->isAlive() == false) {
-		cout << "ëª¬ìŠ¤í„°ë¥¼ ì²˜ì¹˜í–ˆìŠµë‹ˆë‹¤!" << endl;
+		cout << "¸ó½ºÅÍ¸¦ Ã³Ä¡Çß½À´Ï´Ù!" << endl;
 		delete monster;
-		monsterCount ++;
+		monsterCount++;
 		monster = new Monster("Monster" + to_string(monsterCount), 50 + monsterCount * 10, 10 + monsterCount * 2, 25 + monsterCount * 2, 3);
 		cout << "." << endl;
 		Sleep(200);
@@ -137,7 +137,7 @@ bool GameManager::IsGameover() {
 		Sleep(200);
 		cout << "." << endl;
 		Sleep(200);
-		cout << "ë‹¹ì‹ ì€ " << monster->getName() << "ì„/ë¥¼ ì¡°ìš°í–ˆìŠµë‹ˆë‹¤." << endl << endl;
+		cout << "´ç½ÅÀº " << monster->getName() << "À»/¸¦ Á¶¿ìÇß½À´Ï´Ù." << endl << endl;
 		monsterJustRespawned = true;
 
 	}
@@ -149,85 +149,85 @@ void GameManager::GenerateEarlyEventTurns() {
 	int earlyTurnLimit = 5;
 
 	eventTurns.clear();
-	while (eventTurns.size() < numEarlyEvents) { //ëœë¤ì´ë²¤íŠ¸
+	while (eventTurns.size() < numEarlyEvents) { //·£´ıÀÌº¥Æ®
 		int turn = rand() % earlyTurnLimit + 1;
 		if (find(eventTurns.begin(), eventTurns.end(), turn) == eventTurns.end()) {
 			eventTurns.push_back(turn);
 		}
 	}
 
-	cout << "í™•ì • ëœë¤ ì´ë²¤íŠ¸ í„´: ";
-	for (int t : eventTurns) cout << t << " " ; //ë‚˜ì¤‘ì— ì—†ì• ê¸°
+	cout << "È®Á¤ ·£´ı ÀÌº¥Æ® ÅÏ: ";
+	for (int t : eventTurns) cout << t << " "; //³ªÁß¿¡ ¾ø¾Ö±â
 }
 
 bool GameManager::ShouldTriggerRandomEvent() {
-	if (turn <= 5) return false; // ì´ˆë°˜ ê³ ì • ì´ë²¤íŠ¸ í„´ì´ ì§€ë‚˜ë©´ ì¼ë°˜ ëœë¤ ì´ë²¤íŠ¸ í™œì„±í™”
-	return (rand() % 100) < 20; // 20% í™•ë¥ ë¡œ ì´ë²¤íŠ¸ ë°œìƒ
+	if (turn <= 5) return false; // ÃÊ¹İ °íÁ¤ ÀÌº¥Æ® ÅÏÀÌ Áö³ª¸é ÀÏ¹İ ·£´ı ÀÌº¥Æ® È°¼ºÈ­
+	return (rand() % 100) < 20; // 20% È®·ü·Î ÀÌº¥Æ® ¹ß»ı
 }
 
 void GameManager::TriggerRandomEvent() {
-	int effectType = rand() % 4; // 0, 1, 2, 3 ì¤‘ í•˜ë‚˜
+	int effectType = rand() % 4; // 0, 1, 2, 3 Áß ÇÏ³ª
 
 	switch (effectType) {
 	case 0:
 		SetConsoleColor(INTENSE_YELLOW);
-		cout << "[ì´ë²¤íŠ¸] ìµœëŒ€ ì²´ë ¥ì´ 10 ì¦ê°€í•©ë‹ˆë‹¤!" << endl << endl;
-		SetConsoleColor(INTENSE_WHITE); // ê¸°ë³¸ìƒ‰ìœ¼ë¡œ ëŒì•„ì˜´
-		player->increaseMaxHP(10); 
+		cout << "[ÀÌº¥Æ®] ÃÖ´ë Ã¼·ÂÀÌ 10 Áõ°¡ÇÕ´Ï´Ù!" << endl << endl;
+		SetConsoleColor(INTENSE_WHITE); // ±âº»»öÀ¸·Î µ¹¾Æ¿È
+		player->increaseMaxHP(10);
 		Sleep(300);
 		break;
 	case 1:
-		SetConsoleColor(INTENSE_BLUE); // ê¶ê·¹ê¸° ì´ˆê¸°í™” íŒŒë‘ìƒ‰
-		cout << "[ì´ë²¤íŠ¸] ê¶ê·¹ê¸° ì¿¨íƒ€ì„ì´ ì´ˆê¸°í™”ë©ë‹ˆë‹¤!" << endl << endl;
-		SetConsoleColor(INTENSE_WHITE); // ê¸°ë³¸ìƒ‰ìœ¼ë¡œ ëŒì•„ì˜´
-		player->resetUltimateCooldown(); 
+		SetConsoleColor(INTENSE_BLUE); // ±Ã±Ø±â ÃÊ±âÈ­ ÆÄ¶û»ö
+		cout << "[ÀÌº¥Æ®] ±Ã±Ø±â ÄğÅ¸ÀÓÀÌ ÃÊ±âÈ­µË´Ï´Ù!" << endl << endl;
+		SetConsoleColor(INTENSE_WHITE); // ±âº»»öÀ¸·Î µ¹¾Æ¿È
+		player->resetUltimateCooldown();
 		Sleep(300);
 		break;
 	case 2:
-		SetConsoleColor(INTENSE_GREEN); // ì²´ë ¥ íšŒë³µ ì´ˆë¡ìƒ‰
-		cout << "[ì´ë²¤íŠ¸] ì²´ë ¥ì„ 20 íšŒë³µí•©ë‹ˆë‹¤!" << endl << endl;
-		SetConsoleColor(INTENSE_WHITE); // ê¸°ë³¸ìƒ‰ìœ¼ë¡œ ëŒì•„ì˜´
-		player->heal(20); 
+		SetConsoleColor(INTENSE_GREEN); // Ã¼·Â È¸º¹ ÃÊ·Ï»ö
+		cout << "[ÀÌº¥Æ®] Ã¼·ÂÀ» 20 È¸º¹ÇÕ´Ï´Ù!" << endl << endl;
+		SetConsoleColor(INTENSE_WHITE); // ±âº»»öÀ¸·Î µ¹¾Æ¿È
+		player->heal(20);
 		Sleep(300);
 		break;
 	case 3:
-		SetConsoleColor(INTENSE_GREEN); // ì²´ë ¥ íšŒë³µ ì´ˆë¡ìƒ‰
-		cout << "[ì´ë²¤íŠ¸] ëª¨í—˜ì„ í•˜ë˜ ì¤‘ ì—´ë§¤ë¥¼ ë¨¹ì—ˆë”ë‹ˆ ì²´ë ¥ì´ ì™„ì „íˆ íšŒë³µë˜ì—ˆìŠµë‹ˆë‹¤!" << endl << endl;
-		SetConsoleColor(INTENSE_WHITE); // ê¸°ë³¸ìƒ‰ìœ¼ë¡œ ëŒì•„ì˜´
+		SetConsoleColor(INTENSE_GREEN); // Ã¼·Â È¸º¹ ÃÊ·Ï»ö
+		cout << "[ÀÌº¥Æ®] ¸ğÇèÀ» ÇÏ´ø Áß ¿­¸Å¸¦ ¸Ô¾ú´õ´Ï Ã¼·ÂÀÌ ¿ÏÀüÈ÷ È¸º¹µÇ¾ú½À´Ï´Ù!" << endl << endl;
+		SetConsoleColor(INTENSE_WHITE); // ±âº»»öÀ¸·Î µ¹¾Æ¿È
 		player->healToFull();
 		Sleep(300);
 		break;
 
 	case 4:
-		SetConsoleColor(INTENSE_GREEN); // ì²´ë ¥ íšŒë³µ ì´ˆë¡ìƒ‰
-		cout << "[ì´ë²¤íŠ¸] ë™êµ´ì—ì„œ ì‰¬ë˜ ì¤‘ ë¶„ìˆ˜ë¥¼ ë³´ì•˜ë‹¤. ì²´ë ¥ì´ 30 íšŒë³µë˜ì—ˆìŠµë‹ˆë‹¤! " << endl << endl;
-		SetConsoleColor(INTENSE_WHITE); // ê¸°ë³¸ìƒ‰ìœ¼ë¡œ ëŒì•„ì˜´
+		SetConsoleColor(INTENSE_GREEN); // Ã¼·Â È¸º¹ ÃÊ·Ï»ö
+		cout << "[ÀÌº¥Æ®] µ¿±¼¿¡¼­ ½¬´ø Áß ºĞ¼ö¸¦ º¸¾Ò´Ù. Ã¼·ÂÀÌ 30 È¸º¹µÇ¾ú½À´Ï´Ù! " << endl << endl;
+		SetConsoleColor(INTENSE_WHITE); // ±âº»»öÀ¸·Î µ¹¾Æ¿È
 		player->heal(30);
 		Sleep(300);
 		break;
 
-	case 5: 
-		SetConsoleColor(INTENSE_RED); // ë°ë¯¸ì§€ ì¦ê°€ ë¹¨ê°„ìƒ‰
-		cout << "[ì´ë²¤íŠ¸] ë•…ì— ë°•íŒ ê²€ì— ê±¸ë ¤ ë„˜ì–´ì¡Œë”ë‹ˆ ê²€ì˜ í˜ì´ í¡ìˆ˜ë˜ì—ˆìŠµë‹ˆë‹¤. í•œ í„´ ë™ì•ˆ ì¼ë°˜ ê³µê²©ì´ 99999ë§Œí¼ ì¦ê°€í•©ë‹ˆë‹¤!" << endl << endl;
-		SetConsoleColor(INTENSE_WHITE); // ê¸°ë³¸ìƒ‰ìœ¼ë¡œ ëŒì•„ì˜´
+	case 5:
+		SetConsoleColor(INTENSE_RED); // µ¥¹ÌÁö Áõ°¡ »¡°£»ö
+		cout << "[ÀÌº¥Æ®] ¶¥¿¡ ¹ÚÈù °Ë¿¡ °É·Á ³Ñ¾îÁ³´õ´Ï °ËÀÇ ÈûÀÌ Èí¼öµÇ¾ú½À´Ï´Ù. ÇÑ ÅÏ µ¿¾È ÀÏ¹İ °ø°İÀÌ 99999¸¸Å­ Áõ°¡ÇÕ´Ï´Ù!" << endl << endl;
+		SetConsoleColor(INTENSE_WHITE); // ±âº»»öÀ¸·Î µ¹¾Æ¿È
 
 	}
 }
 
 void GameManager::CheckEventTurn() {
-	// ì´ˆë°˜ ê³ ì • ì´ë²¤íŠ¸ í„´ì¸ì§€ í™•ì¸
+	// ÃÊ¹İ °íÁ¤ ÀÌº¥Æ® ÅÏÀÎÁö È®ÀÎ
 	if (find(eventTurns.begin(), eventTurns.end(), turn) != eventTurns.end()) {
-		TriggerRandomEvent(); // ê³ ì • ì´ë²¤íŠ¸ ë°œìƒ
+		TriggerRandomEvent(); // °íÁ¤ ÀÌº¥Æ® ¹ß»ı
 	}
-	// ê³ ì • ì´ë²¤íŠ¸ í„´ì´ ì•„ë‹ˆë©´ì„œ, í™•ë¥ ì ìœ¼ë¡œ ëœë¤ ì´ë²¤íŠ¸ ë°œìƒ ì¡°ê±´ ì¶©ì¡± ì‹œ
+	// °íÁ¤ ÀÌº¥Æ® ÅÏÀÌ ¾Æ´Ï¸é¼­, È®·üÀûÀ¸·Î ·£´ı ÀÌº¥Æ® ¹ß»ı Á¶°Ç ÃæÁ· ½Ã
 	else if (ShouldTriggerRandomEvent()) {
-		TriggerRandomEvent(); // í™•ë¥  ì´ë²¤íŠ¸ ë°œìƒ
+		TriggerRandomEvent(); // È®·ü ÀÌº¥Æ® ¹ß»ı
 	}
 }
 int GameManager::getMonsterKillCount() const {
-	return monsterCount; 
-	}
+	return monsterCount;
+}
 
 int GameManager::getTurnCount() const {
-	return turn; 
-	}	
+	return turn;
+}

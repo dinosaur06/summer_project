@@ -16,7 +16,8 @@ private:
 	int turn;
 	bool monsterJustRespawned = false;
 
-	vector<int> eventTurns; //ëœë¤ì´ë²¤íŠ¸ í„´ ì§€ì •
+	vector<int> eventTurns; // ·£´ı ÀÌº¥Æ® ÅÏ ÀúÀå
+
 	void GenerateEarlyEventTurns();
 	void CheckEventTurn();
 	bool ShouldTriggerRandomEvent();
