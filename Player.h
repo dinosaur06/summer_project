@@ -11,24 +11,25 @@ private:
     int healCooldown;
     int buffTurn = 0;
     int buffAmount = 0;
+    int permanentBuffDamage = 0;
 
 public:
     Player(const string& name, int hp);
 
     void basicAttack(Character& target);
-    void skill2(Character& target);         // Ä¡¸íÅ¸ °ø°İ
+    void skill2(Character& target);         // ì¹˜ëª…íƒ€ ê³µê²©
 
-    bool ultimateSkill(Character& target);  // ±Ã±Ø±â
-    bool heal();    // È¸º¹
+    bool ultimateSkill(Character& target);  // ê¶ê·¹ê¸°
+    bool heal();    // íšŒë³µ
     void heal(int amount);
 
-    void reduceCooldowns();  // ÅÏ¸¶´Ù ÄğÅ¸ÀÓ °¨¼Ò
+    void reduceCooldowns();  // í„´ë§ˆë‹¤ ì¿¨íƒ€ì„ ê°ì†Œ
      
 
     bool canUseUltimate() const;
     bool canUseHeal() const;
 
-    // Ãß°¡: ÇöÀç ÄğÅ¸ÀÓ °ªÀ» °¡Á®¿À´Â ÇÔ¼ö
+    // ì¶”ê°€: í˜„ì¬ ì¿¨íƒ€ì„ ê°’ì„ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
     int getUltimateCooldown() const;
     int getHealCooldown() const;
 
@@ -38,7 +39,13 @@ public:
     void healToFull();
     void resetUltimateCooldown();
 
-    void applybuff(int amount, int turns);
+    void applyBuff(int amount, int turns);
+    bool hasBuff() const;
+    int getBuffAmount() const;
+    void decreaseBuffTurn();
+
+    void applyPermanentBuff(int amount);
+
 };
 
 #endif

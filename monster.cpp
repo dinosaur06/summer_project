@@ -12,13 +12,13 @@ Monster::Monster(const string& name, int hp, int baseDamage, int ultDamage, int 
 
 int Monster::performAction() {
 	if (ultimateCooldownCurrent == 0) {
-		cout << name << "ÀÌ/°¡ ±Ã±Ø±â¸¦ »ç¿ëÇÕ´Ï´Ù!" << endl;
+		cout << name << "ì´/ê°€ ê¶ê·¹ê¸°ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤!" << endl;
 		Sleep(200);
 		ultimateCooldownCurrent = ultimateCooldownMax;
 		return ultimateAttackDamage;
 	} 
 	else {
-		cout << name << "ÀÌ/°¡ ÀÏ¹Ý °ø°ÝÀ» ÇÕ´Ï´Ù!" << endl;
+		cout << name << "ì´/ê°€ ì¼ë°˜ ê³µê²©ì„ í•©ë‹ˆë‹¤!" << endl;
 		Sleep(200);
 		return baseAttackDamage;
 	}
@@ -38,9 +38,9 @@ void Monster::printStatus() const {
 	cout << getName() << " HP: " << hp << "/" << maxHp << " ";
 
 	if (ultimateCooldownCurrent == 0) {
-		cout << "[¸ó½ºÅÍ ±Ã±Ø±â »ç¿ë °¡´É!]" << endl << endl;
+		cout << "[ëª¬ìŠ¤í„° ê¶ê·¹ê¸° ì‚¬ìš© ê°€ëŠ¥!]" << endl << endl;
 	}
 	else {
-		cout << "[¸ó½ºÅÍ ±Ã±Ø±â ÄðÅ¸ÀÓ: " << ultimateCooldownCurrent << "ÅÏ]" << endl << endl;
+		cout << "[ëª¬ìŠ¤í„° ê¶ê·¹ê¸° ì¿¨íƒ€ìž„: " << ultimateCooldownCurrent << "í„´]" << endl << endl;
 	}
 }

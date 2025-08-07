@@ -8,36 +8,39 @@ Player::Player(const string& name, int hp)
     : Character(name, hp), ultimateCooldown(0), healCooldown(0) {}
 
 void Player::basicAttack(Character& target) {
-    int damage = 10;
-    cout << name << "¿Ã/∞° ±‚∫ª ∞¯∞›¿ª ªÁøÎ«ﬂΩ¿¥œ¥Ÿ!\n";
+    int damage = 20 + getBuffAmount() + permanentBuffDamage;
+    cout << name << "Ïù¥/Í∞Ä Í∏∞Î≥∏ Í≥µÍ≤©ÏùÑ ÏÇ¨Ïö©ÌñàÏäµÎãàÎã§!\n";
+    if (getBuffAmount() > 0)
+        cout << "[Î≤ÑÌîÑ Ï†ÅÏö©] Í≥µÍ≤©Î†• +" << getBuffAmount() << "!\n";
     Sleep(200);
     target.takeDamage(damage);
 }
 
+
 void Player::skill2(Character& target) {
-    cout << name << "¿Ã/∞° ƒ°∏Ì≈∏ Ω∫≈≥¿ª ªÁøÎ«ﬂΩ¿¥œ¥Ÿ!\n";
+    cout << name << "Ïù¥/Í∞Ä ÏπòÎ™ÖÌÉÄ Ïä§ÌÇ¨ÏùÑ ÏÇ¨Ïö©ÌñàÏäµÎãàÎã§!\n";
     Sleep(200);
     int critChance = rand() % 100;
     int damage = (critChance < 30) ? 30 : 15;
 
     if (critChance < 30)
-        cout << "ƒ°∏Ì≈∏ º∫∞¯!! ";
+        cout << "ÏπòÎ™ÖÌÉÄ ÏÑ±Í≥µ!! ";
     else
-        cout << "ƒ°∏Ì≈∏ Ω«∆–. ";
+        cout << "ÏπòÎ™ÖÌÉÄ Ïã§Ìå®. ";
 
     target.takeDamage(damage);
 }
 
 bool Player::ultimateSkill(Character& target) {
     if (canUseUltimate()) {
-        cout << name << "¿Ã/∞° ±√±ÿ±‚∏¶ ªÁøÎ«ﬂΩ¿¥œ¥Ÿ!\n";
+        cout << name << "Ïù¥/Í∞Ä Í∂ÅÍ∑πÍ∏∞Î•º ÏÇ¨Ïö©ÌñàÏäµÎãàÎã§!\n";
         Sleep(200);
         target.takeDamage(50);
         ultimateCooldown = 5;
         return true;
     }
     else {
-        cout << "±√±ÿ±‚¥¬ æ∆¡˜ ƒ≈∏¿”¿‘¥œ¥Ÿ. (" << ultimateCooldown << "≈œ ≥≤¿Ω)\n";
+        cout << "Í∂ÅÍ∑πÍ∏∞Îäî ÏïÑÏßÅ Ïø®ÌÉÄÏûÑÏûÖÎãàÎã§. (" << ultimateCooldown << "ÌÑ¥ ÎÇ®Ïùå)\n";
         return false;
     }
 }
@@ -46,7 +49,7 @@ bool Player::heal() {
     if (canUseHeal()) {
         int healAmount = static_cast<int>((maxHp - hp) * 0.5);
         if (healAmount <= 0) {
-            cout << name << "¿« √º∑¬¿Ã ¿ÃπÃ ∞°µÊ √°Ω¿¥œ¥Ÿ!\n";
+            cout << name << "Ïùò Ï≤¥Î†•Ïù¥ Ïù¥ÎØ∏ Í∞ÄÎìù Ï∞ºÏäµÎãàÎã§!\n";
             return false;
         }
         Character::heal(healAmount);
@@ -54,7 +57,7 @@ bool Player::heal() {
         return true;
     }
     else {
-        cout << "»˙¿∫ æ∆¡˜ ƒ≈∏¿”¿‘¥œ¥Ÿ. (" << healCooldown << "≈œ ≥≤¿Ω)\n";
+        cout << "ÌûêÏùÄ ÏïÑÏßÅ Ïø®ÌÉÄÏûÑÏûÖÎãàÎã§. (" << healCooldown << "ÌÑ¥ ÎÇ®Ïùå)\n";
         return false;
     }
 }
@@ -71,6 +74,7 @@ int Player::getHealCooldown() const {
 void Player::reduceCooldowns() {
     if (ultimateCooldown > 0) ultimateCooldown--;
     if (healCooldown > 0) healCooldown--;
+    decreaseBuffTurn(); // Î≤ÑÌîÑÎèÑ ÌÑ¥ÎßàÎã§ Ï§ÑÏñ¥Îì¨
 }
 
 bool Player::canUseUltimate() const {
@@ -82,19 +86,19 @@ bool Player::canUseHeal() const {
 }
 
 void Player::printStatus() const {
-    cout << name << " («√∑π¿ÃæÓ) HP: " << hp << "/" << maxHp << "\n";
+    cout << name << " (ÌîåÎ†àÏù¥Ïñ¥) HP: " << hp << "/" << maxHp << "\n";
 }
 
 void Player::increaseMaxHP(int amount) {
     maxHp += amount;
-    hp += amount; // √÷¥Î √º∑¬ ¡ı∞° Ω√ «ˆ¿Á √º∑¬µµ ¡ı∞° (≥—¡ˆ æ µµ∑œ)
+    hp += amount; // ÏµúÎåÄ Ï≤¥Î†• Ï¶ùÍ∞Ä Ïãú ÌòÑÏû¨ Ï≤¥Î†•ÎèÑ Ï¶ùÍ∞Ä (ÎÑòÏßÄ ÏïäÎèÑÎ°ù)
     if (hp > maxHp) hp = maxHp;
-    cout << name << "¿« √÷¥Î √º∑¬¿Ã " << amount << " ¡ı∞°«ﬂΩ¿¥œ¥Ÿ! («ˆ¿Á: " << maxHp << ")\n";
+    cout << name << "Ïùò ÏµúÎåÄ Ï≤¥Î†•Ïù¥ " << amount << " Ï¶ùÍ∞ÄÌñàÏäµÎãàÎã§! (ÌòÑÏû¨: " << maxHp << ")\n";
 }
 
 void Player::healToFull() {
     hp = maxHp;
-    cout << "√º∑¬¿Ã ¿¸∫Œ »∏∫πµ ! (" << hp << "/" << maxHp << ")\n";
+    cout << "Ï≤¥Î†•Ïù¥ Ï†ÑÎ∂Ä ÌöåÎ≥µÎê®! (" << hp << "/" << maxHp << ")\n";
 }
 
 void Player::resetUltimateCooldown() {
@@ -103,4 +107,27 @@ void Player::resetUltimateCooldown() {
 
 void Player::heal(int amount) {
     Character::heal(amount);
+}
+
+void Player::applyBuff(int amount, int turns) {
+    buffAmount = amount;
+    buffTurn = turns;
+    cout << name << "ÏóêÍ≤å Í≥µÍ≤©Î†• +" << amount << " Î≤ÑÌîÑÍ∞Ä " << turns << "ÌÑ¥ ÎèôÏïà Ï†ÅÏö©Îê©ÎãàÎã§!\n";
+}
+
+bool Player::hasBuff() const {
+    return buffTurn > 0;
+}
+
+int Player::getBuffAmount() const {
+    return hasBuff() ? buffAmount : 0;
+}
+
+void Player::decreaseBuffTurn() {
+    if (buffTurn > 0) buffTurn--;
+}
+
+void Player::applyPermanentBuff(int amount) {
+    permanentBuffDamage += amount;
+    cout << "[Î≤ÑÌîÑ] ÏòÅÍµ¨Ï†ÅÏúºÎ°ú ÏùºÎ∞ò Í≥µÍ≤©Î†•Ïù¥ " << amount << " Ï¶ùÍ∞ÄÌñàÏäµÎãàÎã§!" << endl << endl;
 }

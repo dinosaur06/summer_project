@@ -10,14 +10,14 @@ Character::Character(const string& name, int hp)
 void Character::takeDamage(int damage) {
 	hp -= damage;
 	if (hp < 0) hp = 0;
-	cout << name << "ÀÌ/°¡ " << damage << "ÀÇ ÇÇÇØ¸¦ ÀÔ¾ú½À´Ï´Ù! (ÇöÀç Ã¼·Â: " << hp << "/" << maxHp << ")" << endl << endl;
+	cout << name << "ì´/ê°€ " << damage << "ì˜ í”¼í•´ë¥¼ ìž…ì—ˆìŠµë‹ˆë‹¤! (í˜„ìž¬ ì²´ë ¥: " << hp << "/" << maxHp << ")" << endl << endl;
 	Sleep(500);
 }
 
 void Character::heal(int amount) {
 	hp += amount;
 	if (hp > maxHp) hp = maxHp;
-	cout << name << "ÀÌ/°¡ " << amount << "¸¸Å­ Ã¼·ÂÀ» È¸º¹Çß½À´Ï´Ù! (ÇöÀç Ã¼·Â: " << hp << "/" << maxHp << ")" << endl << endl;
+	cout << name << "ì´/ê°€ " << amount << "ë§Œí¼ ì²´ë ¥ì„ íšŒë³µí–ˆìŠµë‹ˆë‹¤! (í˜„ìž¬ ì²´ë ¥: " << hp << "/" << maxHp << ")" << endl << endl;
 	Sleep(300);
 }
 

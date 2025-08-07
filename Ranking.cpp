@@ -14,7 +14,7 @@ void Ranking::updateRanking(const string& playerName, int monsterCount, int turn
         outFile.close();
     }
     else {
-        cerr << "·©Å· ÆÄÀÏÀ» ¿­ ¼ö ¾ø½À´Ï´Ù." << endl;
+        cerr << "ë­í‚¹ íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤." << endl;
     }
 }
 
@@ -31,25 +31,25 @@ void Ranking::printRanking() {
         inFile.close();
     }
     else {
-        cerr << "·©Å· ÆÄÀÏÀ» ÀĞÀ» ¼ö ¾ø½À´Ï´Ù." << endl; 
+        cerr << "ë­í‚¹ íŒŒì¼ì„ ì½ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤." << endl; 
         return;
     }
 
     sort(rankings.begin(), rankings.end(), [](const auto& a, const auto& b) {
-        return get<1>(a) > get<1>(b); // ³»¸²Â÷¼ø Á¤·Ä (¸ó½ºÅÍ Ã³Ä¡ ¼ö°¡ Å« ¼ø¼­)
+        return get<1>(a) > get<1>(b); // ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬ (ëª¬ìŠ¤í„° ì²˜ì¹˜ ìˆ˜ê°€ í° ìˆœì„œ)
         });
 
-    cout << endl << "[·©Å· TOP 5]" << endl; 
+    cout << endl << "[ë­í‚¹ TOP 5]" << endl; 
     int rank = 1;
     for (const auto& entry : rankings) { 
         cout << rank++ << ". ";
         cout << get<0>(entry);
-        cout << " - ¸ó½ºÅÍ ";
+        cout << " - ëª¬ìŠ¤í„° ";
         cout << get<1>(entry);
-        cout << "¸¶¸® Ã³Ä¡";
+        cout << "ë§ˆë¦¬ ì²˜ì¹˜";
         cout << " (";
         cout << get<2>(entry);
-        cout << "ÅÏ)" << endl;
+        cout << "í„´)" << endl;
 
         if (rank > 5) break; 
     }
