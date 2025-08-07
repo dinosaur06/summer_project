@@ -1,4 +1,4 @@
-﻿#ifndef RANKING_H
+#ifndef RANKING_H
 #define RANKING_H
 #include <string>
 using namespace std;   

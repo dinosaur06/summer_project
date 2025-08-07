@@ -1,4 +1,4 @@
-﻿#include "Monster.h"
+#include "Monster.h"
 #include <iostream>
 #include <windows.h>
 using namespace std;

@@ -1,4 +1,4 @@
-﻿#include "GameManager.h"
+#include "GameManager.h"
 #include <windows.h>
 #include <algorithm>
 #include <cstdlib>
