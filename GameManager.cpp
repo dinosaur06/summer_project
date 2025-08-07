@@ -13,6 +13,7 @@ void SetConsoleColor(int color) {
 }
 
 // 색상 상수 정의
+const int INTENSE_CYAN = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
 const int INTENSE_BLUE = FOREGROUND_BLUE | FOREGROUND_INTENSITY;
 const int INTENSE_GREEN = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
 const int INTENSE_RED = FOREGROUND_RED | FOREGROUND_INTENSITY;
@@ -234,7 +235,7 @@ bool GameManager::ShouldTriggerRandomEvent() {
 }
 
 void GameManager::TriggerRandomEvent() {
-	int effectType = rand() % 7; // 0, 1, 2, 3, 4, 5, 6 중 하나
+	int effectType = rand() % 9; // 0~8 중 하나
 
 	switch (effectType) {
 
@@ -286,6 +287,21 @@ void GameManager::TriggerRandomEvent() {
 	case 6:
 		TriggerRockPaperScissorsEvent();
 		break;
+	case 7:
+		SetConsoleColor(INTENSE_RED);
+		cout << "[이벤트] 최대 체력이 5 감소합니다!" << endl << endl;
+		SetConsoleColor(INTENSE_WHITE); // 기본색으로 돌아옴
+		player->increaseMaxHP(-5);
+		Sleep(300);
+		break;
+
+	case 8:
+		SetConsoleColor(INTENSE_CYAN);
+		cout << "[이벤트] 모험을 떠나던중 보이는 성당에 들어가 기도를 했더니..." << endl << endl;
+		Sleep(1000);
+		cout << "아무일도 없었다...." << endl << endl;
+		SetConsoleColor(INTENSE_WHITE); // 기본색으로 돌아옴
+		Sleep(1000);
 	}
 	
 }
