@@ -14,7 +14,7 @@ void Ranking::updateRanking(const string& playerName, int monsterCount, int turn
         outFile.close();
     }
     else {
-        cerr << "랭킹 파일을 열 수 없습니다." << endl;
+        cerr << "기록 파일을 열 수 없습니다." << endl;
     }
 }
 
@@ -31,7 +31,7 @@ void Ranking::printRanking() {
         inFile.close();
     }
     else {
-        cerr << "랭킹 파일을 읽을 수 없습니다." << endl; 
+        cerr << "기록 파일을 읽을 수 없습니다." << endl; 
         return;
     }
 
@@ -39,7 +39,7 @@ void Ranking::printRanking() {
         return get<1>(a) > get<1>(b); // 내림차순 정렬 (몬스터 처치 수가 큰 순서)
         });
 
-    cout << endl << "[랭킹 TOP 5]" << endl; 
+    cout << endl << "[기록 TOP 5]" << endl; 
     int rank = 1;
     for (const auto& entry : rankings) { 
         cout << rank++ << ". ";
